@@ -10,27 +10,21 @@ package Logic;
  * @author benjaminbajrami
  */
 public class Order {
-    private int id;
+    
     private int length;
     private int width;
     private int quantityheigth;
-    private String orderdater;
+    
 
-    public Order(int id, int length, int width, int quantityheigth, String orderdater) {
-        this.id = id;
+    public Order( int length, int width, int quantityheigth) {
+        
         this.length = length;
         this.width = width;
         this.quantityheigth = quantityheigth;
-        this.orderdater = orderdater;
+        
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    
 
     public int getLength() {
         return length;
@@ -56,18 +50,14 @@ public class Order {
         this.quantityheigth = quantityheigth;
     }
 
-    public String getOrderdater() {
-        return orderdater;
-    }
-
-    public void setOrderdater(String orderdater) {
-        this.orderdater = orderdater;
-    }
-
     @Override
     public String toString() {
-        return "Order{" + "id=" + id + ", length=" + length + ", width=" + width + ", quantityheigth=" + quantityheigth + ", orderdater=" + orderdater + '}';
+        return "Order{" + "length=" + length + ", width=" + width + ", quantityheigth=" + quantityheigth + '}';
     }
+
+    
+
+    
     
     
 }

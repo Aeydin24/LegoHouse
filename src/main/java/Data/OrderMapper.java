@@ -27,7 +27,7 @@ public class OrderMapper {
                 Connector connect = new Connector();
 
                 String addOrder
-                        = "INSERT INTO legoDB.Orders (`id`, `length`, `width`, `quantityheight`) "
+                        = "INSERT INTO legoDB.Orders (`id`, `length`, `width`, `quantityheigth`) "
                         + "VALUES(?,?,?,?);";
 
                 PreparedStatement ps = connect.getConnection().prepareStatement(addOrder);
