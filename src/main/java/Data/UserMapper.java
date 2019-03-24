@@ -20,21 +20,24 @@ import java.util.logging.Logger;
  * @author benjaminbajrami
  */
 public class UserMapper {
-    public static void createUser(User user) throws Exception {
+    public static void createUser(String email, String password) throws SQLException, ClassNotFoundException 
+    {
+       if (email != null && password != null)
+       {    
         try {
-            Connection con = Connector.connection();
-            String SQL = "INSERT INTO user (email, password, role) VALUES (?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, user.getEmail());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, user.getRolegroup());
+            Connector connect = new Connector();
+            
+            String addUser
+                    = "INSERT INTO lego.user (`email`, `password`) "
+                    + "VALUES(?,?);";
+
+            PreparedStatement ps = connect.connection().prepareStatement(addUser);
+            ps.setString(1, email);
+            ps.setString(2, password);
             ps.executeUpdate();
-            ResultSet ids = ps.getGeneratedKeys();
-            ids.next();
-            int id = ids.getInt(1);
-            user.setId(id);
-        } catch (SQLException | ClassNotFoundException ex) {
-            throw new Exception(ex.getMessage());
+            } catch (SQLException ex) {
+          Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);  
+            }
         }
     }
 

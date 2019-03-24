@@ -24,7 +24,7 @@ public class UserCheck {
         return password.equals(user.getPassword());
             
     }
-    public User getUser(String username) throws SQLException 
+    public User getUser(String username) throws SQLException, ClassNotFoundException 
     {
         return UserMapper.getUser(username);
     }
