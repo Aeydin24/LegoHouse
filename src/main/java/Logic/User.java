@@ -17,17 +17,11 @@ public class User {
     private String username;
     private int id;
 
-    public User(String email, String rolegroup, String password, String username, int id) {
+    public User(String email, String password, String username, String rolegroup) {
         this.email = email;
-        this.rolegroup = rolegroup;
         this.password = password;
         this.username = username;
-        this.id = id;
-    }
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+        this.rolegroup = rolegroup;
     }
 
     public int getId() {

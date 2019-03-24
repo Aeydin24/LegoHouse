@@ -20,20 +20,22 @@ import java.util.logging.Logger;
  * @author benjaminbajrami
  */
 public class UserMapper {
-    public static void createUser(String email, String password) throws SQLException, ClassNotFoundException 
+    public static void createUser(String email, String password, String username, String rolegroup) throws SQLException, ClassNotFoundException 
     {
        if (email != null && password != null)
        {    
         try {
-            Connector connect = new Connector();
+            Connector dbc = new Connector();
             
             String addUser
-                    = "INSERT INTO lego.user (`email`, `password`) "
-                    + "VALUES(?,?);";
+                    = "INSERT INTO legoDB.UserTable (`email`, `password`,`username`, `rolegroup`) "
+                    + "VALUES(?,?,?,?);";
 
-            PreparedStatement ps = connect.connection().prepareStatement(addUser);
+            PreparedStatement ps = dbc.getConnection().prepareStatement(addUser);
             ps.setString(1, email);
             ps.setString(2, password);
+            ps.setString(3, username);
+            ps.setString(4, rolegroup);
             ps.executeUpdate();
             } catch (SQLException ex) {
           Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);  
@@ -41,18 +43,20 @@ public class UserMapper {
         }
     }
 
-   public static User login(String email, String password) throws Exception {
+   public static User login(String email, String password, String username, String rolegroup) throws Exception {
         try {
-            Connection con = Connector.connection();
+            Connector dbc = new Connector();
             String SQL = "SELECT id FROM user "
                     + "WHERE email=? AND password=?";
-            PreparedStatement ps = con.prepareStatement(SQL);
+            PreparedStatement ps = dbc.getConnection().prepareStatement(SQL);
             ps.setString(1, email);
             ps.setString(2, password);
+            ps.setString(3, username);
+            ps.setString(4, rolegroup);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int id = rs.getInt("id");
-                User user = new User(email, password);
+                User user = new User(email, password, username, rolegroup);
                 user.setId(id);
                 return user;
             } else {
@@ -64,13 +68,13 @@ public class UserMapper {
     }
    public static User getUser(String email) throws SQLException, ClassNotFoundException {
         User user = new User();
-        Connector con = new Connector();
+        Connector dbc = new Connector();
 
         String query
                 = "SELECT * FROM lego.user "
                 + "WHERE `email`='" + email + "';";
 
-        Connection connection = con.connection();
+        Connection connection = dbc.getConnection();
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(query);
 

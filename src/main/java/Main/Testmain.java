@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Main;
 
 import Data.UserMapper;
@@ -16,12 +12,13 @@ import javax.security.auth.login.LoginException;
  */
 public class Testmain {
     public static void main(String[] args) throws SQLException, ClassNotFoundException, LoginException {
-
-        /* This works */
-      UserMapper mapper = new UserMapper();
-      User test = new User("Test2@Test2.dk", "Test2");
+        //test new user
+        // for some weird ass reason this works, dont touch
+      User test = new User("Test2@Test2.dk", "Test2", "test", "User");
       String email = test.getEmail();
       String password = test.getPassword();
-      mapper.createUser(email, password);
+      String username = test.getUsername();
+      String rolegroup = test.getRolegroup();
+      UserMapper.createUser(email, password, username, rolegroup);
 }
 }

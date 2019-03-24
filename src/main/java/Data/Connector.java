@@ -17,24 +17,38 @@ import java.util.Properties;
 
 public class Connector {
 
-    private static final String URL         = "jdbc:mysql://localhost:3306/lego";
-    private static final String USERNAME    = "root";
-    private static final String PASSWORD    = "Benja2740";
+private Connection connection = null;
 
-    private static Connection Newinstance;
-
-    public static void setConnection(Connection connect) {
-        Newinstance = connect;
-    }
-
-    public static Connection connection() throws ClassNotFoundException, SQLException {
-        if ( Newinstance == null ) {
-            Class.forName( "com.mysql.cj.jdbc.Driver" );
-            Newinstance = DriverManager.getConnection( URL, USERNAME, PASSWORD );
-        }
-        return Newinstance;
-    }
+    /** Constants. */
+    private static final String IP = "localhost";
+    private static final String PORT = "3306";
+    public static final String DATABASE = "legoDB";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "Benja2740";
     
+    /** Make connection to given database. */
+    public Connector() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            String url = "jdbc:mysql://" + IP + ":" + PORT + "/" + DATABASE;
+            Properties props = new Properties();
+            props.put("user", USERNAME);
+            props.put("password", PASSWORD);
+            props.put("allowMultiQueries", true);
+            props.put("useUnicode", true);
+            props.put("useJDBCCompliantTimezoneShift", true);
+            props.put("useLegacyDatetimeCode", false);
+            props.put("serverTimezone", "CET");
+            this.connection = DriverManager.getConnection(url, props);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            ex.printStackTrace();
+            throw new SQLException(ex.getMessage());
+        }
+    }
+    /** Returns the given connection. */
+    public Connection getConnection() {
+        return this.connection;
+    }
 }
 
 
